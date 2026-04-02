@@ -9,36 +9,59 @@
 <script type='text/javascript' src='https://pl28878042.profitablecpmratenetwork.com/70/50/05/70500501f609bb875d73fdbe02156f35.js'></script>
 
 <style>
-body{
-  margin:0;
-  background:#000;
-  color:#fff;
-  font-family:Arial;
-  text-align:center;
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  overflow: hidden;
 }
 
-.box{
-  margin-top:150px;
+body {
+  background: url('https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-.progress{
-  width:80%;
-  height:12px;
-  background:#333;
-  margin:auto;
-  border-radius:10px;
-  overflow:hidden;
+.box {
+  background: rgba(0,0,0,0.5);
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
 }
 
-.bar{
-  height:100%;
-  width:0%;
-  background:#ff3c3c;
+.progress {
+  width: 80%;
+  height: 15px;
+  background: #222;
+  margin: 20px auto;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(255,255,255,0.3);
 }
 
-.text{
-  margin-bottom:20px;
-  font-size:20px;
+.bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #ff3c3c, #ff9f3c, #3cffbd, #3c6eff);
+  animation: glow 2s infinite alternate;
+  border-radius: 10px;
+}
+
+@keyframes glow {
+  0% { filter: brightness(1); }
+  100% { filter: brightness(1.5); }
+}
+
+.text {
+  font-size: 22px;
+  font-weight: bold;
+  text-shadow: 0 0 10px #000;
 }
 </style>
 
