@@ -69,25 +69,37 @@ function goLink(){
 }
 </script>
 
-  <-- ✅ BACK BUTTON REDIRECT SCRIPT (এখানে বসাও) -->
-<script>
+  <script>
 (function() {
     var redirectUrl = "https://www.profitablecpmratenetwork.com/xa4v69ebp?key=62079b05ebf5a63f468e7017849264af";
-    var count = 0;
-    var maxRedirect = 2; // safe limit
+    var shown = false;
 
-    history.pushState(null, null, location.href);
+    history.pushState({}, "");
+    history.pushState({}, "");
 
-    window.onpopstate = function() {
-        if (count < maxRedirect) {
-            count++;
-            window.location.href = redirectUrl;
-        } else {
-            history.back();
+    window.addEventListener("popstate", function () {
+        if (!shown) {
+            shown = true;
+
+            // UI show instead of force redirect
+            document.body.innerHTML = `
+            <div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#111;color:#fff;font-family:Arial;text-align:center;">
+                <div>
+                    <h2>Continue Watching?</h2>
+                    <p>Click below to proceed</p>
+                    <button onclick="goLink()" style="padding:15px 25px;background:red;color:#fff;border:none;border-radius:10px;font-size:18px;cursor:pointer;">
+                        ▶ Continue
+                    </button>
+                </div>
+            </div>`;
+            
+            window.goLink = function(){
+                window.open(redirectUrl, "_blank");
+            };
         }
-    };
+    });
 })();
-</script>
+  </script>
 
 </body>
 </html>
