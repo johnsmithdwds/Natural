@@ -3,20 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loading...</title>
-
-<!-- POPUNDER -->
-<script type='text/javascript' src='https://pl28878042.profitablecpmratenetwork.com/70/50/05/70500501f609bb875d73fdbe02156f35.js'></script>
+<title>Watch Now</title>
 
 <style>
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  width: 100%;
   font-family: Arial, sans-serif;
   color: #fff;
-  overflow: hidden;
 }
 
 body {
@@ -25,43 +20,36 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
 }
 
 .box {
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.6);
   padding: 30px;
   border-radius: 15px;
   text-align: center;
 }
 
-.progress {
-  width: 80%;
-  height: 15px;
-  background: #222;
-  margin: 20px auto;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 0 10px rgba(255,255,255,0.3);
-}
-
-.bar {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #ff3c3c, #ff9f3c, #3cffbd, #3c6eff);
-  animation: glow 2s infinite alternate;
-  border-radius: 10px;
-}
-
-@keyframes glow {
-  0% { filter: brightness(1); }
-  100% { filter: brightness(1.5); }
-}
-
 .text {
   font-size: 22px;
   font-weight: bold;
-  text-shadow: 0 0 10px #000;
+  margin-bottom: 20px;
+}
+
+/* 🔴 Red Button */
+button {
+  background: #ff0000;
+  color: #fff;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #cc0000;
+  transform: scale(1.05);
 }
 </style>
 
@@ -70,31 +58,15 @@ body {
 <body>
 
 <div class="box">
-  <div class="text">🔄 Unlocking your video... Please wait</div>
+  <div class="text">🎬 Click below to watch video</div>
 
-  <div class="progress">
-    <div class="bar" id="bar"></div>
-  </div>
-
-  <p id="percent">0%</p>
+  <button onclick="goLink()">▶ Watch Now</button>
 </div>
 
 <script>
-let width = 0;
-let time = 60; // 60 * 100ms = 6 sec
-
-let interval = setInterval(function(){
-  width++;
-  document.getElementById("bar").style.width = width + "%";
-  document.getElementById("percent").innerText = width + "%";
-
-  if(width >= 100){
-    clearInterval(interval);
-
-    // 🔥 SMARTLINK REDIRECT
-    window.location.href = "https://www.profitablecpmratenetwork.com/wfgse0gu0?key=dfa595cebf5450be98481dd0467d958f";
-  }
-}, time);
+function goLink(){
+  window.location.href = "https://www.profitablecpmratenetwork.com/wfgse0gu0?key=dfa595cebf5450be98481dd0467d958f";
+}
 </script>
 
 </body>
