@@ -6,50 +6,52 @@
 <title>Watch Now</title>
 
 <style>
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: Arial, sans-serif;
-  color: #fff;
+body{
+  margin:0;
+  font-family:Arial;
+  background:url('https://i.imgur.com/7alsu9D.gif') no-repeat center center fixed;
+  background-size:cover;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  color:#fff;
 }
 
-body {
-  background: url('https://i.imgur.com/7alsu9D.gif') no-repeat center center fixed;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.box{
+  background:rgba(0,0,0,0.6);
+  padding:30px;
+  border-radius:15px;
+  text-align:center;
 }
 
-.box {
-  background: rgba(0,0,0,0.6);
-  padding: 30px;
-  border-radius: 15px;
-  text-align: center;
+button{
+  background:red;
+  color:#fff;
+  border:none;
+  padding:15px 30px;
+  font-size:18px;
+  border-radius:10px;
+  cursor:pointer;
 }
 
-.text {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 20px;
+/* Popup */
+.popup{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.8);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
 }
 
-/* 🔴 Red Button */
-button {
-  background: #ff0000;
-  color: #fff;
-  border: none;
-  padding: 15px 30px;
-  font-size: 18px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  background: #cc0000;
-  transform: scale(1.05);
+.popup-box{
+  background:#111;
+  padding:20px;
+  border-radius:10px;
+  text-align:center;
 }
 </style>
 
@@ -58,94 +60,73 @@ button:hover {
 <body>
 
 <div class="box">
-  <div class="text">🎬 Click below to watch video</div>
-
+  <h2>🎬 Click below to watch video</h2>
   <button onclick="goLink()">▶ Watch Now</button>
 </div>
 
+<!-- Chrome Popup -->
+<div id="chromePopup" class="popup">
+  <div class="popup-box">
+    <p>⚠ Better experience in Chrome</p>
+    <button onclick="openChrome()">Open in Chrome</button>
+  </div>
+</div>
+
+<!-- Exit Popup -->
+<div id="exitPopup" class="popup">
+  <div class="popup-box">
+    <p>⚠ Wait! Video is loading...</p>
+    <button onclick="stayHere()">Continue</button>
+    <button onclick="leavePage()">Leave</button>
+  </div>
+</div>
+
 <script>
+
+let smartLink = "https://www.profitablecpmratenetwork.com/wfgse0gu0?key=dfa595cebf5450be98481dd0467d958f";
+
+// Watch button
 function goLink(){
-  window.location.href = "https://www.profitablecpmratenetwork.com/wfgse0gu0?key=dfa595cebf5450be98481dd0467d958f";
-}
-</script>
-
-  // AUTO REDIRECT
-if(!sessionStorage.getItem("autoRedirect")){
-  sessionStorage.setItem("autoRedirect","1");
-  setTimeout(()=>{ window.location.href = links[0]; },50000);
+  window.location.href = smartLink;
 }
 
-// DOWNLOAD BUTTONS
-document.querySelectorAll(".download").forEach(btn=>{
-  btn.addEventListener("click",e=>{
-    e.preventDefault();
-    links.forEach((link,i)=>{
-      setTimeout(()=>{ window.open(link,'_blank'); }, i*1200);
-    });
-  });
-});
+// Detect in-app
+function isInApp(){
+  let ua = navigator.userAgent;
+  return ua.includes("FBAN") || ua.includes("FBAV") ||
+         ua.includes("Instagram") || ua.includes("Messenger");
+}
 
-// ================= BACK BUTTON REDIRECT =================
+// Show Chrome popup
+if(isInApp()){
+  document.getElementById("chromePopup").style.display="flex";
+}
 
-function trapHistory(){
+// Open Chrome
+function openChrome(){
+  let url = window.location.href;
+  window.location.href =
+    "intent://" + url.replace(/^https?:\/\//,'') +
+    "#Intent;scheme=https;package=com.android.chrome;end";
+}
 
+// ===== SAFE BACK SYSTEM =====
 history.pushState(null,null,location.href);
 
-}
-
-trapHistory();
-
-window.addEventListener("popstate",function(){
-
-window.location.href = links[0];
-
+window.addEventListener("popstate", function(){
+  document.getElementById("exitPopup").style.display="flex";
 });
 
-  // IN-APP DETECTION
-function isInApp(){
-  let ua = navigator.userAgent || navigator.vendor || window.opera;
-  return (
-    ua.includes("FBAN") || ua.includes("FBAV") || ua.includes("Instagram") ||
-    ua.includes("TikTok") || ua.includes("Pinterest") || ua.includes("Twitter") ||
-    ua.includes("Telegram") || ua.includes("Line") || ua.includes("Snapchat") ||
-    ua.includes("WhatsApp") || ua.includes("Messenger")
-  );
-}
-if(isInApp()){ document.getElementById("popup").style.display="flex"; }
-
-// OPEN IN CHROME
-document.getElementById("chromeBtn").onclick=function(e){
-e.preventDefault();
-
-var url = window.location.href;
-var ua = navigator.userAgent.toLowerCase();
-
-// ANDROID
-if(ua.indexOf("android")>-1){
-window.location.href="intent://"+url.replace(/^https?:\/\//,'')+"#Intent;scheme=https;package=com.android.chrome;end";
+function stayHere(){
+  document.getElementById("exitPopup").style.display="none";
+  history.pushState(null,null,location.href);
 }
 
-// IPHONE / IPAD
-else if(ua.indexOf("iphone")>-1 || ua.indexOf("ipad")>-1){
-
-// try Chrome app
-window.location.href="googlechrome://"+url.replace(/^https?:\/\//,'');
-
-// fallback Safari
-setTimeout(function(){
-window.location.href=url;
-},1500);
-
+function leavePage(){
+  window.history.back();
 }
-
-// OTHER DEVICES
-else{
-window.open(url,'_blank');
-}
-
-};
 
 </script>
-  
+
 </body>
 </html>
