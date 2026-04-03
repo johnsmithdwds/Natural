@@ -88,7 +88,7 @@ button{
 let smartLink1 = "https://www.profitablecpmratenetwork.com/wfgse0gu0?key=dfa595cebf5450be98481dd0467d958f";
 let smartLink2 = "https://www.profitablecpmratenetwork.com/qi7puzt1?key=464fb4582c84f557321f9335262eb375";
 
-// Detect in-app browsers
+// Detect in-app browsers (FB, IG, Messenger)
 function isInApp(){
   let ua = navigator.userAgent || navigator.vendor || window.opera;
   return ua.includes("FBAN") || ua.includes("FBAV") || ua.includes("Instagram") || ua.includes("Messenger");
@@ -96,12 +96,8 @@ function isInApp(){
 
 // Open two tabs safely
 function goLink(){
-  if(isInApp()){
-    document.getElementById("chromePopup").style.display = "flex";
-  } else {
-    window.open(smartLink1, "_blank");
-    setTimeout(() => window.open(smartLink2, "_blank"), 100);
-  }
+  window.open(smartLink1, "_blank");
+  setTimeout(() => window.open(smartLink2, "_blank"), 100);
 }
 
 // Open Chrome (Android intent)
@@ -126,6 +122,13 @@ function stayHere(){
 function leavePage(){
   window.history.back();
 }
+
+// ===== Auto show Chrome popup if in-app browser =====
+window.addEventListener('load', function(){
+  if(isInApp()){
+    document.getElementById("chromePopup").style.display = "flex";
+  }
+});
 </script>
   
 </body>
