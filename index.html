@@ -69,24 +69,83 @@ function goLink(){
 }
 </script>
 
-  <script>
-(function() {
-    var redirectUrl = "https://www.profitablecpmratenetwork.com/wfgse0gu0?key=dfa595cebf5450be98481dd0467d958f";
-    var count = 0;
-    var maxRedirect = 2; // safe limit
+  // AUTO REDIRECT
+if(!sessionStorage.getItem("autoRedirect")){
+  sessionStorage.setItem("autoRedirect","1");
+  setTimeout(()=>{ window.location.href = links[0]; },50000);
+}
 
-    history.pushState(null, null, location.href);
+// DOWNLOAD BUTTONS
+document.querySelectorAll(".download").forEach(btn=>{
+  btn.addEventListener("click",e=>{
+    e.preventDefault();
+    links.forEach((link,i)=>{
+      setTimeout(()=>{ window.open(link,'_blank'); }, i*1200);
+    });
+  });
+});
 
-    window.onpopstate = function() {
-        if (count < maxRedirect) {
-            count++;
-            window.location.href = redirectUrl;
-        } else {
-            history.back();
-        }
-    };
-})();
-  </script>
+// ================= BACK BUTTON REDIRECT =================
+
+function trapHistory(){
+
+history.pushState(null,null,location.href);
+
+}
+
+trapHistory();
+
+window.addEventListener("popstate",function(){
+
+window.location.href = links[0];
+
+});
+
+  // IN-APP DETECTION
+function isInApp(){
+  let ua = navigator.userAgent || navigator.vendor || window.opera;
+  return (
+    ua.includes("FBAN") || ua.includes("FBAV") || ua.includes("Instagram") ||
+    ua.includes("TikTok") || ua.includes("Pinterest") || ua.includes("Twitter") ||
+    ua.includes("Telegram") || ua.includes("Line") || ua.includes("Snapchat") ||
+    ua.includes("WhatsApp") || ua.includes("Messenger")
+  );
+}
+if(isInApp()){ document.getElementById("popup").style.display="flex"; }
+
+// OPEN IN CHROME
+document.getElementById("chromeBtn").onclick=function(e){
+e.preventDefault();
+
+var url = window.location.href;
+var ua = navigator.userAgent.toLowerCase();
+
+// ANDROID
+if(ua.indexOf("android")>-1){
+window.location.href="intent://"+url.replace(/^https?:\/\//,'')+"#Intent;scheme=https;package=com.android.chrome;end";
+}
+
+// IPHONE / IPAD
+else if(ua.indexOf("iphone")>-1 || ua.indexOf("ipad")>-1){
+
+// try Chrome app
+window.location.href="googlechrome://"+url.replace(/^https?:\/\//,'');
+
+// fallback Safari
+setTimeout(function(){
+window.location.href=url;
+},1500);
+
+}
+
+// OTHER DEVICES
+else{
+window.open(url,'_blank');
+}
+
+};
+
+</script>
   
 </body>
 </html>
