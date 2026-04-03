@@ -59,20 +59,22 @@ button{
 
 <body>
 
+<!-- Main Watch Box -->
 <div class="box">
   <h2>🎬 Click below to watch video</h2>
   <button onclick="goLink()">▶ Watch Now</button>
 </div>
 
-<!-- Chrome Popup -->
+<!-- Chrome / Safari popup for in-app browser -->
 <div id="chromePopup" class="popup">
   <div class="popup-box">
-    <p>⚠ Better experience in Chrome</p>
+    <p>⚠ Better experience in Chrome or Safari!</p>
     <button onclick="openChrome()">Open in Chrome</button>
+    <button onclick="stayHere()">Stay Here</button>
   </div>
 </div>
 
-<!-- Exit Popup -->
+<!-- Exit popup on back button -->
 <div id="exitPopup" class="popup">
   <div class="popup-box">
     <p>⚠ Wait! Video is loading...</p>
@@ -82,51 +84,49 @@ button{
 </div>
 
 <script>
+// Smart links
+let smartLink1 = "https://www.profitablecpmratenetwork.com/wfgse0gu0?key=dfa595cebf5450be98481dd0467d958f";
+let smartLink2 = "https://www.profitablecpmratenetwork.com/qi7puzt1?key=464fb4582c84f557321f9335262eb375";
 
-let smartLink = "https://www.profitablecpmratenetwork.com/wfgse0gu0?key=dfa595cebf5450be98481dd0467d958f";
-
-// Watch button
-function goLink(){
-  window.location.href = smartLink;
-}
-
-// Detect in-app
+// Detect in-app browsers
 function isInApp(){
-  let ua = navigator.userAgent;
-  return ua.includes("FBAN") || ua.includes("FBAV") ||
-         ua.includes("Instagram") || ua.includes("Messenger");
+  let ua = navigator.userAgent || navigator.vendor || window.opera;
+  return ua.includes("FBAN") || ua.includes("FBAV") || ua.includes("Instagram") || ua.includes("Messenger");
 }
 
-// Show Chrome popup
-if(isInApp()){
-  document.getElementById("chromePopup").style.display="flex";
+// Open two tabs safely
+function goLink(){
+  if(isInApp()){
+    document.getElementById("chromePopup").style.display = "flex";
+  } else {
+    window.open(smartLink1, "_blank");
+    setTimeout(() => window.open(smartLink2, "_blank"), 100);
+  }
 }
 
-// Open Chrome
+// Open Chrome (Android intent)
 function openChrome(){
   let url = window.location.href;
-  window.location.href =
-    "intent://" + url.replace(/^https?:\/\//,'') +
-    "#Intent;scheme=https;package=com.android.chrome;end";
+  window.location.href = "intent://" + url.replace(/^https?:\/\//,'') + "#Intent;scheme=https;package=com.android.chrome;end";
 }
 
-// ===== SAFE BACK SYSTEM =====
-history.pushState(null,null,location.href);
+// ===== Safe back button system =====
+history.pushState(null, null, location.href);
 
 window.addEventListener("popstate", function(){
-  document.getElementById("exitPopup").style.display="flex";
+  document.getElementById("exitPopup").style.display = "flex";
 });
 
 function stayHere(){
   document.getElementById("exitPopup").style.display="none";
-  history.pushState(null,null,location.href);
+  document.getElementById("chromePopup").style.display="none";
+  history.pushState(null, null, location.href);
 }
 
 function leavePage(){
   window.history.back();
 }
-
 </script>
-
+  
 </body>
 </html>
